@@ -1,16 +1,15 @@
-import './FormLogin.css'
-import { useRef, useState, useContext } from "react"
-import { useNavigate, Link } from "react-router-dom"
+import './FormCadastro.css'
+import { useRef, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { UserContext } from '../contexts/UserContext'
-import { loginUsuario } from '../service/userService'
+import { cadastraUsuario } from '../service/userService'
 
-export default function Login() {
+export default function Cadastro() {
 
   const usuarioRef = useRef()
   const senhaRef = useRef()
   const [erro, setErro] = useState("")
   const navigate = useNavigate();
-  const { login } = useContext(UserContext)
 
   const validaForm = async (e) => {
     e.preventDefault() // Impede enviar comportamento padrão do navegador
@@ -29,25 +28,20 @@ export default function Login() {
       return;
     }
 
-    const resposta = await loginUsuario(usuario, senha)
+    const resposta = await cadastraUsuario(usuario, senha)
 
     if(resposta.sucesso) {
-      login(usuario)
-      navigate("/dashboard")
+      navigate("/login")
     } else {
       setErro(resposta.erro)
     }
     
   }
 
-  function ValidaLogin() {
-    return "oi";
-  }
-
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={validaForm}>
-        <h2>Entrar</h2>
+        <h2>Registre-se</h2>
         <div className="form-group">
           <label htmlFor="username">Usuário</label>
           <input
@@ -55,7 +49,7 @@ export default function Login() {
             id="username"
             name="username"
             className="form-input"
-            placeholder="Digite seu usuário"
+            placeholder="Digite um nome para seu usuario"
             ref={usuarioRef}
             required
           />
@@ -67,17 +61,14 @@ export default function Login() {
             id="password"
             name="password"
             className="form-input"
-            placeholder="Digite sua senha"
+            placeholder="Digite uma senha"
             ref={senhaRef}
             required
           />
         </div>
         <button type="submit" className="login-button">
-          Entrar
+          Criar usuário
         </button>
-        <div>
-          <p>Ainda não tem um cadastro? <Link to="/registrar" className="registro-btn">Registrar-se</Link></p>
-        </div>
 
         {erro && <p className="erro">{erro}</p>}
       </form>

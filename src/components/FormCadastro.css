@@ -87,12 +87,3 @@
 .erro {
   color: red;
 }
-
-.registro-btn { 
-  color: #007bff;
-  transition: 1s;
-}
-
-.registro-btn:hover {
-  color: red;
-}
